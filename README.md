@@ -17,17 +17,20 @@ EtherFund is a blockchain-based crowdfunding platform that enables project creat
 ## Tech Stack
 
 ### Smart Contracts
+
 - Solidity 0.8.20
 - Hardhat (development environment)
 - OpenZeppelin Contracts (security patterns)
 
 ### Backend
+
 - Node.js + TypeScript
 - Express.js
 - SQLite (better-sqlite3)
 - Ethers.js v6
 
 ### Frontend
+
 - React 18 + TypeScript
 - Vite
 - Tailwind CSS
@@ -56,19 +59,120 @@ EtherFund/
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd Blockchain-EtherFund
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   cd backend && npm install
+   cd ../frontend && npm install
+   ```
+
+3. **Install MetaMask:**
+   - Download from [metamask.io](https://metamask.io)
+   - Install the browser extension
+   - Create or import a wallet
+
+### Quick Start
+
+#### 1. Start Local Blockchain
+
+Open a **new terminal** and start the Hardhat node:
+
 ```bash
-npm install
+npx hardhat node
 ```
 
-3. Set up environment variables:
+**Keep this terminal running** - the node must stay active.
+
+This starts a local Ethereum network on `http://localhost:8545` with 20 test accounts, each with 10,000 ETH.
+
+#### 2. Deploy Contracts
+
+**⚠️ IMPORTANT:** If you restarted the Hardhat node, clear the database first:
+
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+npm run clear-db
 ```
 
-### Development
+Then deploy the factory contract:
+
+```bash
+npm run deploy:local
+```
+
+Copy the **factory** address from the output and update your `.env` files:
+
+**Root `.env`:**
+
+```env
+FACTORY_CONTRACT_ADDRESS=0x...  # Your factory address
+```
+
+**`frontend/.env`:**
+
+```env
+VITE_FACTORY_CONTRACT_ADDRESS=0x...  # Your factory address
+VITE_API_URL=http://localhost:3001
+```
+
+#### 3. Configure MetaMask
+
+1. **Add Local Network:**
+
+   - Open MetaMask
+   - Click network dropdown → "Add Network" or "Add a network manually"
+   - Enter:
+     - **Network Name:** `Hardhat Local`
+     - **RPC URL:** `http://localhost:8545`
+     - **Chain ID:** `1337`
+     - **Currency Symbol:** `ETH`
+   - Click "Save"
+   - Switch to this network
+
+2. **Import Test Account:**
+   - In MetaMask, click account icon → "Import Account"
+   - Paste a private key from the Hardhat node terminal (Account #0 recommended)
+   - Example: `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`
+   - Click "Import"
+
+#### 4. Start Backend
+
+In a **new terminal**:
+
+```bash
+cd backend
+npm run dev
+```
+
+Backend runs on `http://localhost:3001`.
+
+**Note:** If you see warnings about missing contracts, you may need to clear the database and redeploy.
+
+#### 5. Start Frontend
+
+In a **new terminal**:
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend runs on `http://localhost:3000`.
+
+#### 6. Connect and Use
+
+1. Open `http://localhost:3000` in your browser
+2. Click "Connect Wallet" and approve in MetaMask
+3. Create campaigns, contribute, and manage funds!
+
+### Development Commands
 
 #### Smart Contracts
 
@@ -81,33 +185,69 @@ npm test
 
 # Deploy to local network
 npm run deploy:local
+
+# Clear database (before deploying after Hardhat restart)
+npm run clear-db
 ```
 
 #### Backend
 
 ```bash
 cd backend
-npm install
-npm run dev
+npm run dev      # Development server
+npm run build    # Build for production
+npm run clear-db # Clear database manually
 ```
 
 #### Frontend
 
 ```bash
 cd frontend
-npm install
-npm run dev
+npm run dev      # Development server
+npm run build    # Build for production
 ```
+
+## Important Notes
+
+### Hardhat Node Restart
+
+**⚠️ CRITICAL:** When you restart the Hardhat node, all contracts are lost. You must:
+
+1. Clear the database: `npm run clear-db`
+2. Deploy new contracts: `npm run deploy:local`
+3. Update environment variables with the new factory address
+
+The backend will show a warning if it detects missing contracts.
+
+### What Persists vs. What Resets
+
+**Resets (lost on Hardhat restart):**
+
+- Factory contract address
+- All campaign contracts
+- Account balances (reset to 10,000 ETH)
+- Transaction history
+
+**Persists:**
+
+- Account addresses (same every time)
+- Account private keys
+- Database records (but contract addresses become invalid)
+- Environment variable files
+
+See `docs/DEPLOYMENT.md` for complete details.
 
 ## Documentation
 
 See the `docs/` directory for detailed documentation:
-- Architecture overview
-- API documentation
-- Smart contract documentation
-- Deployment guide
+
+- `QUICK_START.md` - Quick setup guide
+- `docs/DEPLOYMENT.md` - Complete deployment guide
+- `docs/ARCHITECTURE.md` - System architecture
+- `docs/API.md` - API documentation
+- `docs/SMART_CONTRACTS.md` - Smart contract details
+- `docs/TROUBLESHOOTING.md` - Common issues and solutions
 
 ## License
 
 MIT
-
