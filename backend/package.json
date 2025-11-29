@@ -1,0 +1,36 @@
+{
+  "name": "etherfund-backend",
+  "version": "1.0.0",
+  "description": "EtherFund backend API",
+  "main": "dist/app.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "clear-db": "tsx src/scripts/clearDb.ts"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.9.0",
+    "better-sqlite3": "^9.2.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.11",
+    "ts-jest": "^29.1.1",
+    "supertest": "^6.3.3",
+    "@types/supertest": "^2.0.16"
+  }
+}
+

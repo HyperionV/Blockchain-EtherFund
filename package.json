@@ -1,0 +1,29 @@
+{
+  "name": "etherfund",
+  "version": "1.0.0",
+  "description": "Blockchain-based crowdfunding platform",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "clear-db": "tsx scripts/clear-db.ts",
+    "deploy:local": "hardhat run scripts/deploy.ts --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.ts --network sepolia"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@typechain/ethers-v6": "^0.5.1",
+    "@typechain/hardhat": "^9.1.0",
+    "hardhat": "^2.19.0",
+    "typescript": "^5.3.3",
+    "tsx": "^4.7.0",
+    "better-sqlite3": "^9.2.2"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  }
+}
