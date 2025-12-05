@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { Campaign as CampaignContract } from "../../../typechain-types";
+import { Campaign as CampaignContract } from "src/../../typechain-types";
 import CampaignABI from "../../../artifacts/contracts/Campaign.sol/Campaign.json";
 
 export interface CampaignDetails {

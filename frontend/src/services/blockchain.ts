@@ -101,7 +101,7 @@ export async function createCampaign(
 export async function contributeToCampaign(
   campaignAddress: string,
   amount: bigint
-): Promise<ethers.ContractTransactionReceipt> {
+): Promise<ethers.ContractTransactionReceipt | null> {
   const campaign = await getCampaignContract(campaignAddress);
   const tx = await campaign.contribute({ value: amount });
   return await tx.wait();
@@ -109,7 +109,7 @@ export async function contributeToCampaign(
 
 export async function withdrawFromCampaign(
   campaignAddress: string
-): Promise<ethers.ContractTransactionReceipt> {
+): Promise<ethers.ContractTransactionReceipt | null> {
   const campaign = await getCampaignContract(campaignAddress);
   const tx = await campaign.withdraw();
   return await tx.wait();
@@ -126,7 +126,7 @@ export async function getContribution(
 
 export async function refundFromCampaign(
   campaignAddress: string
-): Promise<ethers.ContractTransactionReceipt> {
+): Promise<ethers.ContractTransactionReceipt | null> {
   const campaign = await getCampaignContract(campaignAddress);
   const tx = await campaign.refund();
   return await tx.wait();
